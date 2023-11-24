@@ -13,7 +13,7 @@ The instructions on how to install this were derived from [the princeton page](h
 ## Running the flake
 
 ``` sh
-nix shell
+nix shell github:cosineblast/nix-java-introcs
 
 # done! now you already have java-introcs and javac-introcs at your disposal
 
