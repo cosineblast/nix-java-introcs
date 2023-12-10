@@ -1,4 +1,6 @@
-{ pkgs ? import <nixpkgs> {}, ... }:
+{ pkgs ? import <nixpkgs> {},
+  lib ? pkgs.lib,
+  ... }:
 
 pkgs.stdenv.mkDerivation rec {
   pname = "java-princeton";
@@ -14,7 +16,7 @@ pkgs.stdenv.mkDerivation rec {
   };
 
 
-  nativeBuildInputs = [pkgs.unzip];
+  nativeBuildInputs = [pkgs.unzip pkgs.makeWrapper];
 
   buildInputs = [pkgs.jdk11];
 
@@ -28,6 +30,12 @@ pkgs.stdenv.mkDerivation rec {
   cp -r $src/lift/* $out/lift
 
   sed -i -e "s#/usr/local#$out#g" $out/bin/*
+
+  for file in $(ls $out/bin)
+  do
+  wrapProgram $out/bin/$file --set PATH "${lib.makeBinPath [pkgs.jdk11]}"
+  done
+
 
   runHook postInstall
 '';
