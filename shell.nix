@@ -3,6 +3,6 @@
 with pkgs;
 
 mkShell {
-  buildInputs = [ (callPackage ./introcs.nix {}) ];
+  buildInputs = [ (callPackage ./default.nix {}) ];
   shellHook = "zsh";
 }
